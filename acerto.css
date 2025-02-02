@@ -1,0 +1,86 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Alice&display=swap');
+
+body {
+    background-color: black;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    font-family: 'Alice', serif;
+}
+
+.dark_gray {
+    color: darkgray;
+}
+
+.gray {
+    color: gray;
+    font-size: large;
+}
+
+.white {
+    color: lightgray;
+    font-size: large;
+}
+
+.vermelho {
+    color: red;
+    font-size: large;
+}
+
+div {
+    text-align: center;
+}
+
+.button {
+    height: 30px;
+    width: auto;
+}
+
+.tradutor {
+    font-size: x-large;
+    color: rgba(255, 255, 255, 0.3);
+    opacity: 0.5;
+}
+
+.ascii {
+    font-size: x-large;
+    color: rgba(255, 255, 255, 0.25);
+    opacity: 0.25;
+}
+img {
+    max-width: 70%;
+    max-height: 70%;
+}
+
+.footer-text {
+    position: absolute;
+    bottom: 10px;
+    width: 100%;
+    text-align: center;
+    font-size: large;
+}
+        .input-container {
+            position: absolute;
+            top: 10px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+            text-align: center;
+        }
+        .input-container input {
+            padding: 5px;
+            font-size: 1em;
+            margin: 10px;
+            width: 100px;
+            text-align: center;
+        }
+        .message {
+            font-size: 1em;
+            color: red;
+        }
