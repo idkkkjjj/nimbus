@@ -1,1 +1,1 @@
-(Inicio)[https://idkkkjjj.github.io/nimbus/inicio]
+[Inicio](https://idkkkjjj.github.io/nimbus/inicio)
