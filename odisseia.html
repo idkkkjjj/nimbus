@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dois</title>
+    <link rel="stylesheet" href="acerto.css">
+    <link rel="icon" href="icon2.png" type="image/png">
+    <style>
+        body {
+            background-color: black;
+            color: white;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            font-family: 'Alice', serif;
+        }
+        .input-container {
+            position: absolute;
+            top: 10px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+            text-align: center;
+        }
+        .input-container input {
+            padding: 5px;
+            font-size: 1em;
+            margin: 10px;
+            width: 100px;
+            text-align: center;
+        }
+        .message {
+            font-size: 1em;
+            color: red;
+            visibility: hidden;
+            opacity: 0;
+            transition: opacity 1s ease-in-out, visibility 0s 1s;
+        }
+        .message.show {
+            visibility: visible;
+            opacity: 1;
+            transition: opacity 1s ease-in-out;
+        }
+    </style>
+</head>
+<body>
+    <div class="input-container">
+        <input type="text" id="inputText" placeholder="Digite a senha" onkeydown="checarEnter(event)">
+        <div id="message" class="message"></div>
+    </div>
+    <img src="maze.png" alt=”Labirinto”></png>
+    <script>
+        const palavraCorreta = "coração";
+        const siteCorreto = "https://idkkkjjj.github.io/nimbus/coração";
+
+        function checarEnter(event) {
+            if (event.key === "Enter") {
+                verificarPalavra();
+            }
+        }
+        function verificarPalavra() {
+            const input = document.getElementById("inputText").value;
+            const message = document.getElementById("message");
+            const palavraInput = removerAcentos(input.toLowerCase());
+            if (palavraInput === palavraCorreta) {
+                window.location.href = siteCorreto;
+            } else {
+                message.textContent = "Errado.";
+                message.classList.add("show");
+                setTimeout(() => {
+                    message.classList.remove("show");
+                }, 2000);
+            }
+        }
+        function removerAcentos(str) {
+            return str.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+        }
+    </script>
+</body>
+</html>
