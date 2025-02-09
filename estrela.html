@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Seis</title>
+    <link rel="stylesheet" href="acerto.css">
+    <link rel="icon" href="icon2.png" type="image/png">
+    <style>
+        body {
+            background-color: black;
+            color: white;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            font-family: 'Alice', serif;
+        }
+        .poste {
+            width: 250px;
+            height: 450px;
+            background: url('poste.png') no-repeat center;
+            background-size: cover;
+            transition: background 0.2s;
+        }
+        .poste.aceso {
+            background: url('posteaceso.png') no-repeat center;
+            background-size: cover;
+        }
+        .input-container {
+            position: absolute;
+            top: 10px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+            text-align: center;
+        }
+        .input-container input {
+            padding: 5px;
+            font-size: 1em;
+            margin: 10px;
+            width: 100px;
+            text-align: center;
+        }
+        .message {
+            font-size: 1em;
+            color: red;
+            visibility: hidden;
+            opacity: 0;
+            transition: opacity 1s ease-in-out, visibility 0s 1s;
+        }
+        .message.show {
+            visibility: visible;
+            opacity: 1;
+            transition: opacity 1s ease-in-out;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="poste" id="poste"></div>
+    <div class="input-container">
+        <input type="text" id="inputText" placeholder="Digite a senha" onkeydown="checarEnter(event)">
+        <div id="message" class="message"></div>
+    </div>
+
+    <script>
+        const mensagem = "celestial"; 
+
+        const morseCode = {
+            'a': '.-', 'b': '-...', 'c': '-.-.', 'd': '-..', 'e': '.',
+            'f': '..-.', 'g': '--.', 'h': '....', 'i': '..', 'j': '.---',
+            'k': '-.-', 'l': '.-..', 'm': '--', 'n': '-.', 'o': '---',
+            'p': '.--.', 'q': '--.-', 'r': '.-.', 's': '...', 't': '-',
+            'u': '..-', 'v': '...-', 'w': '.--', 'x': '-..-', 'y': '-.--',
+            'z': '--..', '1': '.----', '2': '..---', '3': '...--', 
+            '4': '....-', '5': '.....', '6': '-....', '7': '--...', 
+            '8': '---..', '9': '----.', '0': '-----', ' ': ' '
+        };
+
+        function textoParaMorse(texto) {
+            return texto.toLowerCase().split('').map(char => morseCode[char] || '').join(' ');
+        }
+
+        function piscarMorse(mensagemMorse) {
+            const poste = document.getElementById("poste");
+            let delay = 0;
+
+            mensagemMorse.split(' ').forEach(letra => {
+                letra.split('').forEach(simbolo => {
+                    if (simbolo === '.') {
+                        setTimeout(() => poste.classList.add('aceso'), delay);
+                        setTimeout(() => poste.classList.remove('aceso'), delay + 200);
+                        delay += 800; // 200ms aceso + 600ms pausa
+                    } else if (simbolo === '-') {
+                        setTimeout(() => poste.classList.add('aceso'), delay);
+                        setTimeout(() => poste.classList.remove('aceso'), delay + 800);
+                        delay += 1400; // 800ms aceso + 600ms pausa
+                    }
+                });
+
+                delay += 1500; // 1.5seg entre leyra
+            });
+
+            setTimeout(() => iniciarPiscar(), delay + 2500); // 2.5segs pós palavra
+        }
+
+        function iniciarPiscar() {
+            const mensagemMorse = textoParaMorse(mensagem);
+            piscarMorse(mensagemMorse);
+        }
+
+        setTimeout(() => iniciarPiscar(), 1000);
+
+        const palavraCorreta = "celestial";
+        const siteCorreto = "https://idkkkjjj.github.io/nimbus/celestial";
+
+        function checarEnter(event) {
+            if (event.key === "Enter") {
+                verificarPalavra();
+            }
+        }
+        function verificarPalavra() {
+            const input = document.getElementById("inputText").value;
+            const message = document.getElementById("message");
+            const palavraInput = removerAcentos(input.toLowerCase());
+            if (palavraInput === palavraCorreta) {
+                window.location.href = siteCorreto;
+            } else {
+                message.textContent = "Errado.";
+                message.classList.add("show");
+                setTimeout(() => {
+                    message.classList.remove("show");
+                }, 2000);
+            }
+        }
+        function removerAcentos(str) {
+            return str.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+        }
+    </script>
+</body>
+</html>
