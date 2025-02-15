@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dois</title>
+    <title>Quatorze</title>
     <link rel="stylesheet" href="acerto.css">
     <link rel="icon" href="icon2.png" type="image/png">
     <style>
@@ -64,8 +64,9 @@
     </div>
     <script>
         const palavras = {
-            "Finlay?": "Correto.",
-            "Marjorie": "Qual?",
+            "Nebulosa": "Correto.",
+            "Youtube": "Isso, traga-me a chave deste vídeo.",
+            "Video": "Isso, traga-me a chave deste vídeo.",
             "Etereo": "Contate-me"
         };
         function checarEnter(event) {
@@ -79,10 +80,10 @@
             const palavraInput = removerAcentos(input.toLowerCase());
             if (palavras[palavraInput]) {
                 message.textContent = palavras[palavraInput];
-                message.style.color = palavraInput === "atlas" ? "green" : "orange";
-                if (palavraInput === "atlas") {
+                message.style.color = palavraInput === "Nebulosa" ? "green" : "orange";
+                if (palavraInput === "Nebulosa") {
                     setTimeout(() => {
-                        window.location.href = "https://www.exemplo.com";
+                        window.location.href = "https://idkkkjjj.github.io/nimbus/nebulosa";
                     }, 2500);
                 }
             } else {

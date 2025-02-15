@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Quatro</title>
+    <title>Quatorze</title>
     <link rel="stylesheet" href="acerto.css">
     <link rel="icon" href="icon2.png" type="image/png">
     <style>
@@ -49,41 +49,31 @@
     </style>
 </head>
 <body>
-<div>
-    <audio id="morseAudio" >
-        <source src="coracao.wav" type="audio/mpeg">
-        Seu navegador não suporta o elemento de áudio.
-    </audio>
-    <button onclick="playAudio()" class="button">Iniciar Áudio</button>
-    <script>
-        function playAudio() {
-            var audio = document.getElementById("morseAudio");
-            audio.play();
-        }
-    </script>
-<a href="coracao.wav" download="coracao.wav">
-        <button class="button">Instalar Áudio</button>
-    </a>
-    <p class="gray">Fantasma</p>
-</div>
     <div class="input-container">
         <input type="text" id="inputText" placeholder="Digite a senha" onkeydown="checarEnter(event)">
         <div id="message" class="message"></div>
     </div>
+    <div>
+        <p class="gray">Etéreo</p>
+        <p class="gray">00:02</p>
+        <p class="gray">Contate-me</p>
+    </div>
     <script>
-        const palavraCorreta = "miragem";
-        const siteCorreto = "https://idkkkjjj.github.io/nimbus/miragem";
+        const palavrasCorretas = ["nebulosa"];
+        const siteCorreto = "https://idkkkjjj.github.io/nimbus/nebulosa";
 
         function checarEnter(event) {
             if (event.key === "Enter") {
                 verificarPalavra();
             }
         }
+
         function verificarPalavra() {
             const input = document.getElementById("inputText").value;
             const message = document.getElementById("message");
             const palavraInput = removerAcentos(input.toLowerCase());
-            if (palavraInput === palavraCorreta) {
+
+            if (palavrasCorretas.includes(palavraInput)) {
                 window.location.href = siteCorreto;
             } else {
                 message.textContent = "Errado.";
@@ -93,6 +83,7 @@
                 }, 2000);
             }
         }
+
         function removerAcentos(str) {
             return str.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
         }
