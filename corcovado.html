@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nove</title>
+    <link rel="stylesheet" href="acerto.css">
+    <link rel="icon" href="icon2.png" type="image/png">
+    <style>
+        body {
+            background-color: black;
+            color: white;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            font-family: 'Alice', serif;
+        }
+        .input-container {
+            position: absolute;
+            top: 10px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+            text-align: center;
+        }
+        .input-container input {
+            padding: 5px;
+            font-size: 1em;
+            margin: 10px;
+            width: 100px;
+            text-align: center;
+        }
+        .message {
+            font-size: 1em;
+            color: red;
+            visibility: hidden;
+            opacity: 0;
+            transition: opacity 1s ease-in-out, visibility 0s 1s;
+        }
+        .message.show {
+            visibility: visible;
+            opacity: 1;
+            transition: opacity 1s ease-in-out;
+        }
+        .banner {
+            height: 350px;
+            width: 350px;
+            display: block;
+            margin: auto;
+        }
+        #posData {
+            display: none;
+            font-size: 1.5em;
+            color: yellow;
+            margin-top: 20px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body onload="verificarData()">
+    <div class="input-container">
+        <input type="text" id="inputText" placeholder="Digite a senha" onkeydown="checarEnter(event)">
+        <div id="message" class="message"></div>
+    </div>
+    <div>
+        <img src="aniversario.png" alt="Quando nasci?" class="banner">
+    </div>
+    <div id="posData">
+        <img src="qr.png" alt=QR>
+        <p class="white">6 romano gênero italiano</p>
+        <p class="white">wegqsgxacwbhmt</p>
+    </div>
+
+    <script>
+        const palavrasCorretas = ["lemure","aye-aye","aie-aie"];
+        const siteCorreto = "https://idkkkjjj.github.io/nimbus/lemure";
+
+        function checarEnter(event) {
+            if (event.key === "Enter") {
+                verificarPalavra();
+            }
+        }
+
+        function verificarPalavra() {
+            const input = document.getElementById("inputText").value;
+            const message = document.getElementById("message");
+            const palavraInput = removerAcentos(input.toLowerCase());
+
+            if (palavrasCorretas.includes(palavraInput)) {
+                window.location.href = siteCorreto;
+            } else {
+                message.textContent = "Errado.";
+                message.classList.add("show");
+                setTimeout(() => {
+                    message.classList.remove("show");
+                }, 2000);
+            }
+        }
+
+        function removerAcentos(str) {
+            return str.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+        }
+
+        function verificarData() {
+            const hoje = new Date();
+            const dia = hoje.getDate();
+            const mes = hoje.getMonth() + 1; // jan = 0
+
+            // datatt
+            const diaCerto = 14;
+            const mesCerto = 3;
+
+            if (dia === diaCerto && mes === mesCerto) {
+                // div dps
+                document.getElementById("posData").style.display = "block";
+
+                // div antes
+                document.querySelector("div img.banner").parentElement.style.display = "none";
+            }
+        }
+    </script>
+</body>
+</html>
