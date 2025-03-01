@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dez</title>
+    <link rel="stylesheet" href="acerto.css">
+    <link rel="icon" href="icon2.png" type="image/png">
+    <style>
+        body {
+            background-color: black;
+            background-image: url("Principal Gonçalves.png");
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            color: white;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            font-family: 'Alice', serif;
+        }
+        .input-container {
+            position: absolute;
+            top: 10px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+            text-align: center;
+        }
+        .input-container input {
+            padding: 5px;
+            font-size: 1em;
+            margin: 10px;
+            width: 100px;
+            text-align: center;
+        }
+        .message {
+            font-size: 1em;
+            color: red;
+            visibility: hidden;
+            opacity: 0;
+            transition: opacity 1s ease-in-out, visibility 0s 1s;
+        }
+        .message.show {
+            visibility: visible;
+            opacity: 1;
+            transition: opacity 1s ease-in-out;
+        }
+        .banner {
+            height: 350px;
+            width: 350px;
+            display: block;
+            margin: auto;
+        }
+        .white2 {
+            margin-top: 700px;
+            padding-bottom: 0px;
+            text-align: center;
+            color: lightgray;
+            font-size: large;
+}
+    </style>
+</head>
+    <div class="input-container">
+        <input type="text" id="inputText" placeholder="Digite a senha" onkeydown="checarEnter(event)">
+        <div id="message" class="message"></div>
+    </div>
+    <div>
+        <p class="white2">Gonçalves Principal</p>
+        <p class="white">Sentimento</p>
+    </div>
+    <script>
+        const palavrasCorretas = ["nacionalismo"];
+        const siteCorreto = "https://idkkkjjj.github.io/nimbus/nacionalismo";
+
+        function checarEnter(event) {
+            if (event.key === "Enter") {
+                verificarPalavra();
+            }
+        }
+
+        function verificarPalavra() {
+            const input = document.getElementById("inputText").value;
+            const message = document.getElementById("message");
+            const palavraInput = removerAcentos(input.toLowerCase());
+
+            if (palavrasCorretas.includes(palavraInput)) {
+                window.location.href = siteCorreto;
+            } else {
+                message.textContent = "Errado.";
+                message.classList.add("show");
+                setTimeout(() => {
+                    message.classList.remove("show");
+                }, 2000);
+            }
+        }
+
+        function removerAcentos(str) {
+            return str.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+        }
+    </script>
+</body>
+</html>
