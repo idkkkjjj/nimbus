@@ -58,19 +58,21 @@
         <p class="ascii">céu</p>
     </div>
     <script>
-        const palavraCorreta = "aurora";
-        const siteCorreto = "https://idkkkjjj.github.io/nimbus/aurora";
+        const palavrasCorretas = ["aurora","aurora boreal","boreal","aurora-boreal"];
+        const siteCorreto = "https://idkkkjjj.github.io/nimbus/416";
 
         function checarEnter(event) {
             if (event.key === "Enter") {
                 verificarPalavra();
             }
         }
+
         function verificarPalavra() {
             const input = document.getElementById("inputText").value;
             const message = document.getElementById("message");
             const palavraInput = removerAcentos(input.toLowerCase());
-            if (palavraInput === palavraCorreta) {
+
+            if (palavrasCorretas.includes(palavraInput)) {
                 window.location.href = siteCorreto;
             } else {
                 message.textContent = "Errado.";
@@ -80,6 +82,7 @@
                 }, 2000);
             }
         }
+
         function removerAcentos(str) {
             return str.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
         }
