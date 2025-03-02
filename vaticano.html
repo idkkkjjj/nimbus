@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quinze</title>
+    <link rel="stylesheet" href="acerto.css">
+    <link rel="icon" href="icon2.png" type="image/png">
+    <style>
+        body {
+            background-color: black;
+            color: white;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            font-family: 'Alice', serif;
+        }
+        .input-container {
+            position: absolute;
+            top: 10px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+            text-align: center;
+        }
+        .input-container input {
+            padding: 5px;
+            font-size: 1em;
+            margin: 10px;
+            width: 100px;
+            text-align: center;
+        }
+        .message {
+            font-size: 1em;
+            color: red;
+            visibility: hidden;
+            opacity: 0;
+            transition: opacity 1s ease-in-out, visibility 0s 1s;
+        }
+        .message.show {
+            visibility: visible;
+            opacity: 1;
+            transition: opacity 1s ease-in-out;
+        }
+        .luz-container {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            max-width: 600px;
+            margin-top: 50px;
+        }
+        .luz {
+            width: 30px;
+            height: 30px;
+            margin: 5px;
+            border-radius: 15px;
+            background-color: gray;
+            cursor: pointer;
+        }
+        .luz.acendida {
+            background-color: yellow;
+        }
+        .luz.desligada {
+            background-color: gray;
+        }
+        #mensagemFinal {
+            display: none;
+            font-size: large;
+            color: white;
+            margin-top: 15px;
+        }
+    </style>
+</head>
+<body>
+    <div class="input-container">
+        <input type="text" id="inputText" placeholder="Digite a senha" onkeydown="checarEnter(event)">
+        <div id="message" class="message"></div>
+    </div>
+    
+    <div class="luz-container">
+        <div class="luz" onclick="toggleLuz(0)"></div>
+        <div class="luz" onclick="toggleLuz(1)"></div>
+        <div class="luz" onclick="toggleLuz(2)"></div>
+        <div class="luz" onclick="toggleLuz(3)"></div>
+        <div class="luz" onclick="toggleLuz(4)"></div>
+        <div class="luz" onclick="toggleLuz(5)"></div>
+        <div class="luz" onclick="toggleLuz(6)"></div>
+        <div class="luz" onclick="toggleLuz(7)"></div>
+        <div class="luz" onclick="toggleLuz(8)"></div>
+        <div class="luz" onclick="toggleLuz(9)"></div>
+    </div>
+    <div id="mensagemFinal">ROT13</div>
+    <p class="white">qrsvavgvib</p>
+
+    <script>
+        const palavrasCorretas = ["definitivo"];
+        const siteCorreto = "https://idkkkjjj.github.io/nimbus/definitivo";
+
+        let luzes = Array(10).fill(false); // false apaga true liga
+
+        function checarEnter(event) {
+            if (event.key === "Enter") {
+                verificarPalavra();
+            }
+        }
+
+        function verificarPalavra() {
+            const input = document.getElementById("inputText").value;
+            const message = document.getElementById("message");
+            const palavraInput = removerAcentos(input.toLowerCase());
+
+            if (palavrasCorretas.includes(palavraInput)) {
+                window.location.href = siteCorreto;
+            } else {
+                message.textContent = "Errado.";
+                message.classList.add("show");
+                setTimeout(() => {
+                    message.classList.remove("show");
+                }, 2000);
+            }
+        }
+
+        function removerAcentos(str) {
+            return str.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+        }
+
+        // Função para alternar o estado das luzes
+        function toggleLuz(index) {
+            // Alterar o estado da luz selecionada
+            luzes[index] = !luzes[index];
+
+            // Alterar o estado das luzes adjacentes
+            if (index > 0) luzes[index - 1] = !luzes[index - 1]; // luz esquerda
+            if (index < luzes.length - 1) luzes[index + 1] = !luzes[index + 1]; // lz direita
+
+            updateLuzes();
+
+            verificarFinal();
+        }
+
+        function updateLuzes() {
+            const luzesElements = document.querySelectorAll('.luz');
+            luzes.forEach((estado, index) => {
+                if (estado) {
+                    luzesElements[index].classList.add('acendida');
+                    luzesElements[index].classList.remove('desligada');
+                } else {
+                    luzesElements[index].classList.add('desligada');
+                    luzesElements[index].classList.remove('acendida');
+                }
+            });
+        }
+
+        function verificarFinal() {
+            if (luzes.every(luz => luz === true)) {
+                document.getElementById("mensagemFinal").style.display = "block";
+            }
+        }
+    </script>
+</body>
+</html>
