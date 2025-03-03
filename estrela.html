@@ -29,46 +29,45 @@
             background: url('posteaceso.png') no-repeat center;
             background-size: cover;
         }
-        .input-container {
-            position: absolute;
-            top: 10px;
+        .botoes {
+            margin-top: 20px;
             display: flex;
-            flex-direction: column;
-            align-items: center;
-            width: 100%;
-            text-align: center;
+            gap: 10px;
         }
-        .input-container input {
-            padding: 5px;
+        .botoes button {
+            padding: 10px;
             font-size: 1em;
-            margin: 10px;
-            width: 100px;
-            text-align: center;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
         }
-        .message {
-            font-size: 1em;
-            color: red;
-            visibility: hidden;
-            opacity: 0;
-            transition: opacity 1s ease-in-out, visibility 0s 1s;
+        .iniciar {
+            background-color: green;
+            color: white;
         }
-        .message.show {
-            visibility: visible;
-            opacity: 1;
-            transition: opacity 1s ease-in-out;
+        .parar {
+            background-color: red;
+            color: white;
         }
     </style>
 </head>
 <body>
 
     <div class="poste" id="poste"></div>
+
+    <div class="botoes">
+        <button class="iniciar" onclick="iniciarPiscar()">Iniciar</button>
+        <button class="parar" onclick="pararPiscar()">Parar</button>
+    </div>
+
     <div class="input-container">
         <input type="text" id="inputText" placeholder="Digite a senha" onkeydown="checarEnter(event)">
         <div id="message" class="message"></div>
     </div>
 
     <script>
-        const mensagem = "celestial"; 
+        const mensagem = "celestial";
+        let morseTimeouts = [];
 
         const morseCode = {
             'a': '.-', 'b': '-...', 'c': '-.-.', 'd': '-..', 'e': '.',
@@ -92,28 +91,33 @@
             mensagemMorse.split(' ').forEach(letra => {
                 letra.split('').forEach(simbolo => {
                     if (simbolo === '.') {
-                        setTimeout(() => poste.classList.add('aceso'), delay);
-                        setTimeout(() => poste.classList.remove('aceso'), delay + 200);
+                        morseTimeouts.push(setTimeout(() => poste.classList.add('aceso'), delay));
+                        morseTimeouts.push(setTimeout(() => poste.classList.remove('aceso'), delay + 200));
                         delay += 800; // 200ms aceso + 600ms pausa
                     } else if (simbolo === '-') {
-                        setTimeout(() => poste.classList.add('aceso'), delay);
-                        setTimeout(() => poste.classList.remove('aceso'), delay + 800);
+                        morseTimeouts.push(setTimeout(() => poste.classList.add('aceso'), delay));
+                        morseTimeouts.push(setTimeout(() => poste.classList.remove('aceso'), delay + 800));
                         delay += 1400; // 800ms aceso + 600ms pausa
                     }
                 });
 
-                delay += 1500; // 1.5seg entre leyra
+                delay += 1500; // 1.5 sey entre letras
             });
 
-            setTimeout(() => iniciarPiscar(), delay + 2500); // 2.5segs pós palavra
+            morseTimeouts.push(setTimeout(() => iniciarPiscar(), delay + 2500)); // 2.5 seg pós palavra
         }
 
         function iniciarPiscar() {
+            pararPiscar(); // Garante que não haja múltiplas execuções ao mesmo tempo
             const mensagemMorse = textoParaMorse(mensagem);
             piscarMorse(mensagemMorse);
         }
 
-        setTimeout(() => iniciarPiscar(), 1000);
+        function pararPiscar() {
+            morseTimeouts.forEach(timeout => clearTimeout(timeout));
+            morseTimeouts = [];
+            document.getElementById("poste").classList.remove('aceso');
+        }
 
         const palavraCorreta = "celestial";
         const siteCorreto = "https://idkkkjjj.github.io/nimbus/celestial";
@@ -123,6 +127,7 @@
                 verificarPalavra();
             }
         }
+
         function verificarPalavra() {
             const input = document.getElementById("inputText").value;
             const message = document.getElementById("message");
@@ -137,6 +142,7 @@
                 }, 2000);
             }
         }
+
         function removerAcentos(str) {
             return str.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
         }
